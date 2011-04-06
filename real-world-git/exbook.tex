@@ -1,0 +1,34 @@
+\documentclass[11pt]{book}
+
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\lstset{
+	tabsize=4,
+	basicstyle=\footnotesize,
+	columns=fixed,
+}
+
+\parindent0pt
+\parskip10pt
+%\raggedright
+
+\title{\bf Real-World Git Usage}
+\author{Manohar Vanga}
+\date{\today}
+
+\begin{document}
+\frontmatter
+\maketitle
+\tableofcontents
+\mainmatter
+
+\include{git}
+
+\end{document}
