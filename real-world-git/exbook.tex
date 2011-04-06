@@ -1,18 +1,28 @@
 \documentclass[11pt]{book}
 
+\usepackage{graphicx}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage{fullpage}
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{listings}
-
+\usepackage{comment}
 \usepackage{caption}
+\usepackage{courier}
+
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 \lstset{
+	language=bash,
 	tabsize=4,
-	basicstyle=\footnotesize,
+	basicstyle=\ttfamily,
+%	basicstyle=\fontfamily{pcr}\selectfont,
 	columns=fixed,
+	morekeywords={rm,mkdir,touch,ls}
 }
 
 \parindent0pt
