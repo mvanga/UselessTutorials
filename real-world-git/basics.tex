@@ -1,0 +1,137 @@
+\chapter{The Basics}
+
+Git is a distributed version control system.
+
+\section{Creating a New Repository}
+
+To create a new repository, you can use the \emph{init} command of git. You 
+can use it as follows:
+
+\begin{lstlisting}[label=git-init, caption='Initializing a git repository']
+$ cd $FOLDER_WITH_SOURCE_CODE
+$ git init
+\end{lstlisting}
+
+Git stores everything into a hidden folder in the top-level directory
+named \emph{.git}.
+
+\section{Destroying an Existing Repository}
+
+There may be times when you want to get rid of a git repository. The 
+easiest way to do this is to just remove the \emph{.git} folder.
+
+\begin{lstlisting}[label=git-destroy, caption='Destroying a git repository']
+$ cd $FOLDER_WITH_GIT_REPO
+$ rm -rf .git
+\end{lstlisting}
+
+\section{Adding Files to the Index}
+
+You can add specific files to the index (see below) using the \emph{add} 
+command as shown below.
+
+\begin{lstlisting}[label=git-add, caption='Adding files to a git repository']
+$ vim test.c
+$ git add test.c
+\end{lstlisting}
+
+There are three main concepts that can help you visualize the process
+used by Git. These are part of every single Git repository:
+
+\begin{description}
+\item[Repository:] This consists of all commited changes. When you
+commit something, it is added to the current repository.
+\item[Working Directory:] The working directory consists of all the
+uncommited changes made since the last commit in the current repository.
+\item[Index:] This is all the things that will be commited into the next
+commit.
+\end{description}
+
+\begin{itemize}
+\item When you do the \emph{init} command, you are in effect, creating an
+empty repository.
+\item When you edit a file and save it, the changes you have made get 
+added to the working directory.
+\item When you use the \emph{add} command on the file you just edited, 
+the changes you made are added to the index.
+\item When you commit the changes using the \emph{commit} command, only
+the changes in the index are moved to the repository. The changes are
+also removed from the working directory.
+\end{itemize}
+
+Having these three distinct parts of the process has many advantages. For
+example, support you have made many changes and want to organize these changes
+into multiple commits for clarity. All your uncommited changes are automatically
+in your working directory. You can now add a specific file or part of a 
+file (see section \ref{sec:add-i}) and only those changes will be added to the
+index. Now you can commit the changes and redo the process for the rest
+of the changes.
+
+\section{Adding Parts of a File to the Index}
+\label{sec:add-i}
+There are times when you do not want to commit all the changes you
+made to a file into one commit. In this case, you need a way to add
+specific lines within a file to the Git index. You can do this using
+the \emph{interactive} mode of the \emph{add} command:
+
+\begin{lstlisting}[label=git-add-i, caption='Adding parts of files to a git repository']
+$ git add -i
+           staged     unstaged path
+  1:    unchanged        +4/-0 [t]est.c
+
+*** Commands ***
+  1: [s]tatus     2: [u]pdate     3: [r]evert     4: [a]dd untracked
+  5: [p]atch      6: [d]iff       7: [q]uit       8: [h]elp
+What now>
+\end{lstlisting}
+
+You should get something like the above when you run this command. Now
+select the \emph{patch} mode by typing '5' or 'p'. You should get a new
+prompt like the one below:
+
+\begin{lstlisting}[label=git-add-i, caption='Adding parts of files to a git repository']
+What now> p
+           staged     unstaged path
+  1:    unchanged        +4/-0 [t]est.c
+Patch update>> 
+\end{lstlisting}
+
+You can select the files, from which you want changes to be added, by 
+their number.
+
+\begin{lstlisting}[label=git-add-i, caption='Adding parts of files to a git repository']
+Patch update>> 1
+           staged     unstaged path
+* 1:    unchanged        +4/-0 [t]est.c
+\end{lstlisting}
+
+An asterisk should appear next to the selected file. Once you have
+done this for all the files you want to add parts from, just press 
+return to begin adding:
+
+\begin{lstlisting}[label=git-add-i, caption='Adding parts of files to a git repository']
+Patch update>> 
+diff --git a/test.c b/test.c
+index 691cfab..d148f17 100644
+--- a/test.c
++++ b/test.c
+@@ -8,3 +8,7 @@ int main(int argc, char *argv[])
+ 	printf("Hello World %d\n", i);
+	return 0;
+}
++
++// one commit
++
++// 2nd commit
+Stage this hunk [y,n,q,a,d,/,e,?]? 
+\end{lstlisting}
+
+At this point you can press \emph{'y'} to add this part of the file (called
+a hunk for some weird reason) to the index. You can select \emph{'n'} to 
+not add it to the index. If you want to break it into smaller parts,
+you can choose \emph{'s'}.
+
+Once you are done, you just enter \emph{'q'} to ignore the rest and return
+to the shell. Only parts of the file would have been added.
+
+\section{Viewing the Status of the Repository}
