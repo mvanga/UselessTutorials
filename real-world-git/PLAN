@@ -1,3 +1,18 @@
+### general rules for git
+How should a collaboration between people in a big project look like? (branches, who merges, patches/pushing)
+Using branches (and not introducing changes to the main branch)
+
+### cases
+#Extreme
 Amend fucked me over: what should I do? Authorship is fucked too!
+Accidentally I commited changes to master branch. How to move it to my branch? 
+
+#Easy
+I added several commits and now I that in one of them a bug has been introduced. How to find it? (bisect)
+I made a commit and now I see it is incomplete. 
 Add a commit between two commits
 Reword the commit message of a past commit
+Adding changes to the last commit (using git stash)
+
+#Trivial
+I found a few lines that seem to be particularly stupid. Who is the author?
