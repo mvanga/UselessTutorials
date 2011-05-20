@@ -133,5 +133,48 @@ you can choose \emph{'s'}.
 
 Once you are done, you just enter \emph{'q'} to ignore the rest and return
 to the shell. Only parts of the file would have been added.
+\section{Changing commits from the past}
+Let's assume that you just have made several commits and after that you noticed that accidently one of them added some debugging printing function calls. They were very helpful at the stage of development but now they are useless.
+The trivial way of solving this problem would be to simply remove the calls and commit the fixed code. Luckily, you may avoid  cluttering the repository with this kind of commits.
+Let's say that you want to edit code from the last but three commit. Type then: 
+\begin{lstlisting}
+git rebase -i HEAD~3
+\end{lstlisting}
 
+HEAD~3 stays for editing three commits from the HEAD, which is the last commit. -i stays from interactive mode. After this command you will see a text like the following.
+
+\begin{lstlisting}
+pick b5e5583 Check if XILINX env variable is set
+pick 11edaf6 Handle unexpected parsing errors in manfiests
+pick b6efcc6 Remove debugging prints
+
+# Rebase 7d63e57..b6efcc6 onto 7d63e57
+#
+# Commands:
+#  p, pick = use commit
+#  r, reword = use commit, but edit the commit message
+#  e, edit = use commit, but stop for amending
+#  s, squash = use commit, but meld into previous commit
+#  f, fixup = like "squash", but discard this commit's log message
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+# However, if you remove everything, the rebase will be aborted.
+#
+\end{lstlisting}
+You see there a list of available commands. Delete ``pick'' at the screwed commit, type ``edit'', save and exit. Now the code is brought back to the state from the selected commit. You can find the unneeded messages and remove them from your code. When you are done, follow the instructions that were shown in the console.
+
+For amending the changes type
+\begin{lstlisting}
+git commit --amend
+\end{lstlisting}
+When you are satisfied with your changes, you commited them and want to go back to the last commit, type
+\begin{lstlisting}
+git rebase --continue
+\end{lstlisting}
+\vspace{1cm}
+The rebase command may be also helpful when you want to fix a commit message from the past. Type then
+\begin{lstlisting}
+$ git rebase -i HEAD~3
+\end{lstlisting}
+You will see the editor with text that has to be edited. Get rid of ``pick'' next to you chosen commit and type ``r'' or ``reward''. After you save and exit, you can edit the commit message. Voilà!
 \section{Viewing the Status of the Repository}
