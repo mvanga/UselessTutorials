@@ -1,10 +1,13 @@
-all: exbook.dvi
+TOP := exbook.tex
+SRC := basics.tex
+DVI := $(patsubst %.tex, %.dvi, $(TOP))
+all: $(DVI) 
 
-%.dvi: %.tex
+$(DVI): $(TOP) $(SRC)
 	latex $<
 	latex $<
 	dvipdfm $@
-	evince exbook.pdf
+	evince $@
 
 clean:
 	rm -rf *.aux *.dvi *.log *.toc *.pdf
